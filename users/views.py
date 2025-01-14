@@ -5,6 +5,11 @@ from django.contrib.auth import login, authenticate, logout
 from .models import CustomUser
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
+import firebase_admin
+from firebase_admin import firestore
+
+# Initialize Firestore DB
+db = firestore.client()
 
 def signup(request):
     if request.method == 'POST':
@@ -43,6 +48,20 @@ def signup(request):
             state=state,
             pincode=pincode
         )
+
+        # Create user in Firebase Firestore as well
+        user_data = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'username': username,
+            'email': email,
+            'user_type': user_type,
+            'address_line1': address_line1,
+            'city': city,
+            'state': state,
+            'pincode': pincode
+        }
+        db.collection('users').document(username).set(user_data)
 
         # Log the user in after successful signup
         login(request, user)
