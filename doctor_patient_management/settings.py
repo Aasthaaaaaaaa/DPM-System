@@ -2,9 +2,20 @@ from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials, auth, firestore
 
-# Firebase Setup (Add Firebase Admin SDK credentials)
-cred = credentials.Certificate("D:/doctor_patient_management/doctor-patient-managemen-659cd-firebase-adminsdk-ptywl-8921663b27.json")
-firebase_admin.initialize_app(cred)
+import os
+from firebase_admin import credentials, initialize_app
+from dotenv import load_dotenv
+load_dotenv() 
+
+# Fetch the path of the Firebase credentials from environment variables
+firebase_cred = os.getenv('FIREBASE_CREDENTIALS_PATH')
+
+if firebase_cred:
+    cred = credentials.Certificate(firebase_cred)
+    initialize_app(cred)
+else:
+    raise ValueError("Firebase credentials path is not set!")
+
 
 # Firebase Authentication Example Usage (verify ID tokens)
 def verify_firebase_token(id_token):
