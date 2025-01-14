@@ -1,12 +1,9 @@
 from pathlib import Path
 import firebase_admin
-from firebase_admin import credentials, auth
-
-
-
+from firebase_admin import credentials, auth, firestore
 
 # Firebase Setup (Add Firebase Admin SDK credentials)
-cred = credentials.Certificate("D:\doctor_patient_management\doctor-patient-managemen-659cd-firebase-adminsdk-ptywl-8921663b27.json")
+cred = credentials.Certificate("D:/doctor_patient_management/doctor-patient-managemen-659cd-firebase-adminsdk-ptywl-8921663b27.json")
 firebase_admin.initialize_app(cred)
 
 # Firebase Authentication Example Usage (verify ID tokens)
@@ -23,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = 'django-insecure-k^^zshk_o5)$fo=#)--)r%0ra-ygj+&s%5k$4xbyk&+af-sv_#'
-DEBUG = False
+DEBUG = True 
 ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
@@ -33,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
+    'users',  # Your custom app for user management
 ]
 
 MIDDLEWARE = [
@@ -66,18 +63,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'doctor_patient_management.wsgi.application'
 
-# Database Configuration
-# Firebase Firestore Configuration Example
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'doctor_patient_management',
-        'USER': 'aastha',
-        'PASSWORD': 'aastha',
-        'HOST': '127.0.0.1',  # Use 'localhost' if running locally
-        'PORT': '3306',       # Default MySQL port
-    }
-}
+# Remove MySQL Database Configuration completely
+DATABASES = {'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Using SQLite
+        'NAME': BASE_DIR / 'db.sqlite3',         # Path to the SQLite file
+    }}
+
+# Firebase Firestore Configuration
+db = firestore.client()
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"

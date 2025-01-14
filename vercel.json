@@ -3,7 +3,10 @@
     "builds": [
         {
             "src": "doctor_patient_management/wsgi.py",
-            "use": "@vercel/python"
+            "use": "@vercel/python",
+            "config": {
+                "installCommand": "apt-get update && apt-get install -y default-libmysqlclient-dev && pip install -r requirements.txt"
+            }
         }
     ],
     "routes": [
@@ -11,5 +14,12 @@
             "src": "/(.*)",
             "dest": "doctor_patient_management/wsgi.py"
         }
-    ]
+    ],
+    "env": {
+        "MYSQL_HOST": "root",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "aastha",
+        "MYSQL_PASSWORD": "aastha",
+        "MYSQL_DB": ""
+    }
 }
