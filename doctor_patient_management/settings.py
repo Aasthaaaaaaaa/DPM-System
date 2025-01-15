@@ -53,7 +53,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = 'django-insecure-k^^zshk_o5)$fo=#)--)r%0ra-ygj+&s%5k$4xbyk&+af-sv_#'
 DEBUG = True 
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost' , 'Aastha.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
