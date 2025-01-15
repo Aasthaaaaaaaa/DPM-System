@@ -1,21 +1,38 @@
 from pathlib import Path
-import firebase_admin
-from firebase_admin import credentials, auth, firestore
-
 import os
-from firebase_admin import credentials, initialize_app
+import json
+from firebase_admin import credentials, initialize_app, auth, firestore
 from dotenv import load_dotenv
-load_dotenv() 
 
-# Fetch the path of the Firebase credentials from environment variables
-firebase_cred = os.getenv('FIREBASE_CREDENTIALS_PATH')
 
-if firebase_cred:
-    cred = credentials.Certificate(firebase_cred)
-    initialize_app(cred)
+
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
+# Firebase credentials setup
+firebase_cred_dict = {
+    "type": "service_account", 
+    "project_id": os.getenv("project_id"),
+    "private_key_id": os.getenv("private_key_id"),
+    "private_key": os.getenv("private_key"),
+    "client_email": os.getenv("client_email"),
+    "client_id": os.getenv("client_id"),
+    "auth_uri": os.getenv("auth_uri"),
+    "token_uri": os.getenv("token_uri"),
+    "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
+    "client_x509_cert_url": os.getenv("client_x509_cert_url"),
+    "universe_domain":  os.getenv("universe_domain")
+}
+
+if all(firebase_cred_dict.values()):  # Check if all values are loaded
+    try:
+        cred = credentials.Certificate(firebase_cred_dict)
+        initialize_app(cred)
+    except Exception as e:
+        raise ValueError(f"Invalid Firebase credentials: {e}")
 else:
-    raise ValueError("Firebase credentials path is not set!")
-
+    raise ValueError("One or more Firebase credentials are missing from the environment variables!")
 
 # Firebase Authentication Example Usage (verify ID tokens)
 def verify_firebase_token(id_token):
@@ -23,8 +40,12 @@ def verify_firebase_token(id_token):
         decoded_token = auth.verify_id_token(id_token)
         uid = decoded_token['uid']
         return uid
-    except:
-        raise ValueError('Invalid token')
+    except Exception as e:
+        raise ValueError(f"Invalid token: {e}")
+
+
+# Firebase Firestore
+db = firestore.client()
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,25 +95,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'doctor_patient_management.wsgi.application'
 
-# Remove MySQL Database Configuration completely
-DATABASES = {'default': {
+# Database configuration
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # Using SQLite
         'NAME': BASE_DIR / 'db.sqlite3',         # Path to the SQLite file
-    }}
-
-# Firebase Firestore Configuration
-db = firestore.client()
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # For Firebase authentication:
 AUTH_USER_MODEL = 'users.CustomUser'   # Define your custom user model as needed
