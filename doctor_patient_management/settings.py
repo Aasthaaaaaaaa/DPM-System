@@ -96,7 +96,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'doctor_patient_management.wsgi.application'
 
 # Database configuration
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
