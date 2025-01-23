@@ -16,3 +16,9 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 # Register the CustomUser model and the CustomUserAdmin class
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+from django.contrib import admin
+from .models import Blog
+
+admin.site.register(Blog)

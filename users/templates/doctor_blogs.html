@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Blogs</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffb6c1;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .section-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 95%; /* Adjusted to prevent overflow */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .blog-container {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .blog-container h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .blog-container img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: block; /* Make the image block-level */
+            margin-left: auto;  /* Align to the left automatically */
+            margin-right: auto; /* Align to the right automatically */
+        }
+        .blog-container p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .btn-dashboard {
+            display: block;
+            width: 200px;
+            padding: 12px;
+            background-color: #ff69b4;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin: 20px auto;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-dashboard:hover {
+            background-color: #ff1493;
+        }
+        @media (max-width: 768px) {
+            .section-container {
+                padding: 15px;
+            }
+            .blog-container {
+                padding: 10px;
+            }
+            .blog-container h3 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Your Blogs</h2>
+    
+    <div class="section-container">
+        <div class="section-title">Published Blogs</div>
+        {% for blog in published_blogs %}
+            <div class="blog-container">
+                <h3>{{ blog.title }}</h3>
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                {% endif %}
+                <p>{{ blog.summary|truncatewords:15 }}...</p>
+            </div>
+        {% empty %}
+            <p style="text-align: center;">You have no published blogs.</p>
+        {% endfor %}
+    </div>
+    
+    <div class="section-container">
+        <div class="section-title">Draft Blogs</div>
+        {% for blog in draft_blogs %}
+            <div class="blog-container">
+                <h3>{{ blog.title }}</h3>
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                {% endif %}
+                <p>{{ blog.summary|truncatewords:15 }}...</p>
+            </div>
+        {% empty %}
+            <p style="text-align: center;">You have no draft blogs.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Redirect to dashboard button -->
+    <a href="{% url 'doctor_dashboard' %}" class="btn-dashboard">Go to Dashboard</a>
+
+</body>
+</html>

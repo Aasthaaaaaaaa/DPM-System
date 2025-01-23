@@ -53,3 +53,12 @@ class PasswordChangeForm(forms.Form):
         if new_password != confirm_password:
             raise forms.ValidationError("Passwords do not match.")
         return cleaned_data
+
+
+from django import forms
+from .models import Blog
+
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ['title', 'image', 'category', 'summary', 'content', 'is_draft']

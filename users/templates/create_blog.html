@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffb6c1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .form-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            font-weight: 600;
+        }
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .input-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 15px; /* Space between buttons */
+        }
+        button:hover {
+            background-color: #ff1493;
+        }
+        /* Success message styling */
+        .success-message {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            border-radius: 5px;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .btn-dashboard {
+            width: 50%;
+            padding: 8px;
+            background-color: #ff69b4;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block; /* Make the button block-level */
+            margin: 10px auto; /* Center it horizontally and add margin */
+        }
+        .btn-dashboard:hover {
+            background-color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <!-- Success message at the top -->
+        {% if success_message %}
+            <div class="success-message">{{ success_message }}</div>
+        {% endif %}
+        
+        <h2>Create Blog</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" required>
+            </div>
+            <div class="input-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image" accept="image/*">
+            </div>
+            <div class="input-group">
+                <label for="category">Category</label>
+                <select name="category" id="category" required>
+                    <option value="Mental Health">Mental Health</option>
+                    <option value="Heart Disease">Heart Disease</option>
+                    <option value="Covid19">Covid19</option>
+                    <option value="Immunization">Immunization</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="summary">Summary</label>
+                <textarea name="summary" id="summary" maxlength="255" required></textarea>
+            </div>
+            <div class="input-group">
+                <label for="content">Content</label>
+                <textarea name="content" id="content" required></textarea>
+            </div>
+            <div class="input-group">
+                <label for="is_draft">Save as Draft</label>
+                <input type="checkbox" name="is_draft" id="is_draft">
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Dashboard Button -->
+        <a href="{% url 'doctor_dashboard' %}" class="btn-dashboard">Go to Dashboard</a>
+    </div>
+</body>
+</html>

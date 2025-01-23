@@ -44,6 +44,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin: 10px 0;
         }
         button:hover {
             background-color: #ff1493;
@@ -52,24 +53,18 @@
 </head>
 <body>
     <div class="dashboard">
-        
         <h2>Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
-        
-        
-
         <div class="info">
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Address Line 1:</strong> {{ user.address_line1 }}</p>
-<p><strong>City:</strong> {{ user.city }}</p>
-<p><strong>State:</strong> {{ user.state }}</p>
-<p><strong>Pincode:</strong> {{ user.pincode }}</p>
-
+            <p><strong>City:</strong> {{ user.city }}</p>
+            <p><strong>State:</strong> {{ user.state }}</p>
+            <p><strong>Pincode:</strong> {{ user.pincode }}</p>
             <p><strong>Type:</strong> Patient</p>
         </div>
-        
+        <button onclick="window.location.href='{% url 'patient_blogs' %}'">View Blogs</button>
         <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
-
     </div>
 </body>
 </html>

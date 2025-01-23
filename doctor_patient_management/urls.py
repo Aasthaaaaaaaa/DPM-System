@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+   
     path('admin/', admin.site.urls),
     path('', include('users.urls')),  # Include users URLs here for default path
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

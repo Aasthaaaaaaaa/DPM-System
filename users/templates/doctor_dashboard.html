@@ -44,15 +44,15 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin: 10px 0;
         }
         button:hover {
-            background-color: #ff1493;;
+            background-color: #ff1493;
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        
         <h2>Welcome, Dr. {{ user.first_name }} {{ user.last_name }}</h2>
         <div class="info">
             <p><strong>Username:</strong> {{ user.username }}</p>
@@ -63,6 +63,8 @@
             <p><strong>Pincode:</strong> {{ user.pincode }}</p>
             <p><strong>Type:</strong> Doctor</p>
         </div>
+        <button onclick="window.location.href='{% url 'create_blog' %}'">Create Blog Post</button>
+        <button onclick="window.location.href='{% url 'doctor_blogs' %}'">Your Blogs</button>
         <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
     </div>
 </body>
