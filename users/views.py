@@ -16,18 +16,17 @@ def signup(request):
             messages.error(request, "Invalid user type selected!")
             return redirect('signup')
 
-
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
-        user_type = request.POST['user_type']
         address_line1 = request.POST['address_line1']
         city = request.POST['city']
         state = request.POST['state']
         pincode = request.POST['pincode']
+        profile_picture = request.FILES.get('profile_picture')  # Get the profile picture from the form
 
         # Check if password and confirm password match
         if password != confirm_password:
@@ -39,7 +38,7 @@ def signup(request):
             messages.error(request, "Username already exists!")
             return redirect('signup')
 
-        # Create new user with address fields
+        # Create new user with address fields and profile picture
         user = CustomUser.objects.create_user(
             username=username,
             email=email,
@@ -50,7 +49,8 @@ def signup(request):
             address_line1=address_line1,
             city=city,
             state=state,
-            pincode=pincode
+            pincode=pincode,
+            profile_picture=profile_picture  # Save the profile picture
         )
 
         # Log the user in after successful signup
@@ -59,9 +59,8 @@ def signup(request):
         # Show a success message
         messages.success(request, "Successfully signed up! Please login now.")
 
-        # Don't redirect to the dashboard; stay on the signup page
-        return render(request, 'signup.html')
-
+        # Redirect to the dashboard or a different page after signup
+        return redirect('signup')  # Or the page you want to redirect to after signup
 
     return render(request, 'signup.html')
 
@@ -180,3 +179,15 @@ def patient_blogs(request):
 
     print("User is not a patient. Redirecting to login.")
     return redirect('login')  # Redirect if user is not a patient
+
+
+@login_required
+def delete_blog(request, blog_id):
+    if request.method == "POST":  # Ensure deletion only happens on POST request
+        blog = get_object_or_404(Blog, id=blog_id, author=request.user)  # Ensure the user is the owner
+        blog.delete()
+        messages.success(request, "Blog deleted successfully.")
+    else:
+        messages.error(request, "Invalid request method.")
+    
+    return redirect('doctor_blogs')  # Redirect to the list of blogs after deletion

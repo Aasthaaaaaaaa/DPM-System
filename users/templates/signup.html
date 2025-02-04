@@ -8,81 +8,100 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #ffb6c1; /* Pink background */
+            background: linear-gradient(to right, #141414, #1c1c1c);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            flex-wrap: wrap;
         }
         .signup-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 450px; /* Adjusted width */
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4); /* Changed to purple */
+            width: 450px;
+            color: white;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Vertical scrollbar */
-            max-height: 90vh; /* Ensure it doesn't overflow the screen */
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
         }
         .signup-form h2 {
             text-align: center;
-            margin-bottom: 20px;
-        }
-        .input-group {
             margin-bottom: 15px;
-        }
-        .input-group label {
+            font-size: 24px;
             font-weight: 600;
         }
-        .input-group input, .input-group select, .input-group textarea {
+        .input-group {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group label {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .input-group input, .input-group select {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
             border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box; /* Ensures padding is included in the width calculation */
+            border: none;
+            background-color: #333;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box; /* Ensure padding is considered in width */
+        }
+        .input-group input::placeholder {
+            color: #bbb;
         }
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #ff69b4; /* Pink color for button */
+            padding: 12px;
+            background-color: #800080; /* Purple background */
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            box-sizing: border-box; /* Ensure padding is considered in width */
         }
         button:hover {
-            background-color: #ff1493; /* Darker pink */
+            background-color: #9b59b6; /* Lighter purple for hover effect */
+        }
+        .message, .error {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: 500;
         }
         .message {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #d4edda;
-            border-radius: 5px;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            color: #28a745; /* green color */
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center; #28a745
         }
         .error {
+            color: #dc3545; /* Red color for error */
+            font-weight: bold;
+            margin-bottom: 15px;
             text-align: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border-radius: 5px;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        }
+        p {
+            text-align: center;
+            margin-top: 10px;
         }
         a {
-            color: #ff69b4;
-            text-decoration: none; 
+            color: #800080; /* Purple link color */
+            text-decoration: none;
+            font-weight: 500;
         }
-        a:hover{
+        a:hover {
             text-decoration: underline;
-
         }
     </style>
 </head>
@@ -100,12 +119,12 @@
             {% csrf_token %}
             <div class="input-group">
                 <label for="first_name">First Name</label>
-                <input type="text" name="first_name" id="first_name" required>
+                <input type="text" name="first_name" id="first_name" placeholder="Enter your first name" required>
             </div>
 
             <div class="input-group">
                 <label for="last_name">Last Name</label>
-                <input type="text" name="last_name" id="last_name" required>
+                <input type="text" name="last_name" id="last_name" placeholder="Enter your last name" required>
             </div>
 
             <div class="input-group">
@@ -123,47 +142,47 @@
 
             <div class="input-group">
                 <label for="username">Username</label>
-                <input type="text" name="username" id="username" required>
+                <input type="text" name="username" id="username" placeholder="Choose a username" required>
             </div>
 
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" required>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
             </div>
 
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" name="password" id="password" placeholder="Create a password" required>
             </div>
 
             <div class="input-group">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" name="confirm_password" id="confirm_password" required>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password" required>
             </div>
 
             <div class="input-group">
                 <label for="address_line1">Address Line 1</label>
-                <input type="text" name="address_line1" id="address_line1" required>
+                <input type="text" name="address_line1" id="address_line1" placeholder="Enter your address" required>
             </div>
 
             <div class="input-group">
                 <label for="city">City</label>
-                <input type="text" name="city" id="city" required>
+                <input type="text" name="city" id="city" placeholder="Enter your city" required>
             </div>
 
             <div class="input-group">
                 <label for="state">State</label>
-                <input type="text" name="state" id="state" required>
+                <input type="text" name="state" id="state" placeholder="Enter your state" required>
             </div>
 
             <div class="input-group">
                 <label for="pincode">Pincode</label>
-                <input type="text" name="pincode" id="pincode" required>
+                <input type="text" name="pincode" id="pincode" placeholder="Enter your pincode" required>
             </div>
 
             <button type="submit">Signup</button>
         </form>
-        <p>Already have an account? <a href="{% url 'login' %} ">Login</a></p>
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
     </div>
 </body>
 </html>

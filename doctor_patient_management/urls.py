@@ -3,7 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [
+if settings.DEBUG:
+   urlpatterns = [
    
     path('admin/', admin.site.urls),
     path('', include('users.urls')),  # Include users URLs here for default path

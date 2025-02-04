@@ -8,36 +8,41 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #ffb6c1;
+            background: linear-gradient(to right, #141414, #1c1c1c);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            padding: 0 20px;
+            color: white;
         }
         h2 {
             text-align: center;
-            margin-bottom: 20px;
-            color: #333;
+            margin-top: 40px; /* Added margin at the top */
+            font-size: 28px;
+            font-weight: 600;
         }
         .section-container {
-            background-color: white;
+            background-color: rgba(20, 20, 20, 0.9);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4);
             margin: 20px auto;
-            max-width: 95%; /* Adjusted to prevent overflow */
-            width: 100%;
+            width: 95%;
+            max-width: 900px;
             box-sizing: border-box;
         }
         .section-title {
             font-size: 20px;
             font-weight: 600;
-            color: #333;
+            color: white;
             margin-bottom: 15px;
             text-align: center;
         }
         .blog-container {
-            background-color: #f9f9f9;
+            background-color: #333;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -47,7 +52,7 @@
         .blog-container h3 {
             margin: 0 0 10px;
             font-size: 18px;
-            color: #333;
+            color: white;
         }
         .blog-container img {
             width: 100%;
@@ -55,31 +60,32 @@
             height: auto;
             border-radius: 5px;
             margin: 10px 0;
-            display: block; /* Make the image block-level */
-            margin-left: auto;  /* Align to the left automatically */
-            margin-right: auto; /* Align to the right automatically */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         .blog-container p {
             margin: 5px 0;
             font-size: 14px;
-            color: #555;
+            color: #bbb;
         }
         .btn-dashboard {
             width: 200px;
-            padding: 12px;
-            background-color: #ff69b4;
+            padding: 8px;
+            background-color: #800080; /* Purple background */
             color: white;
             font-size: 16px;
+            font-weight: 600;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            display: block; /* Make the button block-level */
-            margin: 20px auto; /* Center it horizontally and add margin */
+            display: block;
+            margin: 40px auto 20px; /* Positioned the button at the bottom */
         }
         .btn-dashboard:hover {
-            background-color: #ff1493;
+            background-color: #9b59b6;
         }
         @media (max-width: 768px) {
             .section-container {
@@ -95,8 +101,8 @@
     </style>
 </head>
 <body>
-    <h2>Patient Blogs</h2>
-    
+    <h2>Blogs for Patients</h2>
+
     {% if blogs_by_category %}
         {% for category, blogs in blogs_by_category.items %}
             <div class="section-container">

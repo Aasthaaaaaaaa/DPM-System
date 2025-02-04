@@ -8,64 +8,119 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #ffb6c1; /* Pink background */
+            background: linear-gradient(to right, #141414, #1c1c1c); /* Dark gradient */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            flex-wrap: wrap;
         }
         .dashboard {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            text-align: center;
+            background-color: rgba(20, 20, 20, 0.9); /* Dark background for the card */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4); /* Purple shadow */
+            width: 500px;
+            color: white;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h2 {
             margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
         }
-        .info {
-            margin-bottom: 10px;
-        }
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
             margin-bottom: 20px;
         }
-        button {
-            background-color: #ff69b4;
-            color: white;
+        .info {
+            flex: 1;
+            text-align: left; /* Left-align the user details */
+            font-size: 16px;
+            font-weight: 100;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .profile-box {
+            width: 150px;
+            height: 170px;
+            background-color: #333;
+            border-radius: 10px;
             padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Space between the buttons */
+            margin-top: 20px;
+            width: 100%;
+        }
+        button {
+            background-color: #800080; /* Signup button color */
+            color: white;
+            padding: 2px 12px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            margin: 10px 0;
+            font-size: 15px;
+           
+            transition: background 0.3s ease;
+            width: 120px; /* Reduced length */
         }
         button:hover {
-            background-color: #ff1493;
+            background-color: #9b59b6; /* Darker purple for hover effect */
+        }
+        p {
+            margin-top: 10px;
+        }
+        a {
+            color: #800080; /* Purple link color */
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
         <h2>Welcome, Dr. {{ user.first_name }} {{ user.last_name }}</h2>
-        <div class="info">
-            <p><strong>Username:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Address Line 1:</strong> {{ user.address_line1 }}</p>
-            <p><strong>City:</strong> {{ user.city }}</p>
-            <p><strong>State:</strong> {{ user.state }}</p>
-            <p><strong>Pincode:</strong> {{ user.pincode }}</p>
-            <p><strong>Type:</strong> Doctor</p>
+        <div class="info-container">
+            <div class="info">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Address Line 1:</strong> {{ user.address_line1 }}</p>
+                <p><strong>City:</strong> {{ user.city }}</p>
+                <p><strong>State:</strong> {{ user.state }}</p>
+                <p><strong>Pincode:</strong> {{ user.pincode }}</p>
+                <p><strong>Type:</strong> Doctor</p>
+            </div>
+            <div class="profile-box">
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-pic" />
+            </div>
         </div>
-        <button onclick="window.location.href='{% url 'create_blog' %}'">Create Blog Post</button>
-        <button onclick="window.location.href='{% url 'doctor_blogs' %}'">Your Blogs</button>
-        <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+        <div class="button-container">
+            <button onclick="window.location.href='{% url 'create_blog' %}'">Create Blog Post</button>
+            <button onclick="window.location.href='{% url 'doctor_blogs' %}'">Your Blogs</button>
+            <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+        </div>
     </div>
 </body>
 </html>

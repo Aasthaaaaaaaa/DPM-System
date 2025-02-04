@@ -8,56 +8,74 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #ffb6c1; /* Pink background */
+            background: linear-gradient(to right, #141414, #1c1c1c); /* Same background as signup */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            flex-wrap: wrap;
         }
         .login-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 450px; /* Adjusted width */
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4); /* Same shadow color as signup */
+            width: 450px;
+            color: white;
             display: flex;
             flex-direction: column;
+            align-items: stretch;
+            box-sizing: border-box; /* Ensure the padding doesn't affect the width */
         }
         .login-form h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 600;
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
         }
         .input-group label {
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
         .input-group input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
             border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box; /* Ensures padding is included in the width calculation */
+            border: none;
+            background-color: #333;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box; /* Ensure padding is considered in width */
+        }
+        .input-group input::placeholder {
+            color: #bbb;
         }
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #ff69b4; /* Pink color for button */
+            padding: 12px;
+            background-color: #800080; /* Purple background for button */
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin-top: 15px;
+            box-sizing: border-box; /* Ensure padding is considered in width */
         }
         button:hover {
-            background-color: #ff1493; /* Darker pink */
+            background-color: #9b59b6; /* Lighter purple for hover effect */
         }
         .error-message {
-            color: #ff1493;
+            color: #dc3545; /* Red color for error */
             font-weight: bold;
             margin-bottom: 15px;
             text-align: center;
@@ -67,8 +85,9 @@
             margin-top: 10px;
         }
         .signup-link a {
-            color: #ff69b4;
+            color: #800080; /* Purple link color */
             text-decoration: none;
+            font-weight: 500;
         }
         .signup-link a:hover {
             text-decoration: underline;
@@ -92,12 +111,12 @@
             {% csrf_token %}
             <div class="input-group">
                 <label for="username">Username</label>
-                <input type="text" name="username" id="username" required>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required>
             </div>
 
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
             </div>
 
             <button type="submit">Login</button>
