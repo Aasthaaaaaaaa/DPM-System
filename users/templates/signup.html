@@ -15,18 +15,22 @@
             height: 100vh;
             margin: 0;
             flex-wrap: wrap;
+            height: 100vh;
         }
         .signup-form {
             background-color: rgba(20, 20, 20, 0.9);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4); /* Changed to purple */
+            box-shadow: 5px 14px 15px rgba(128, 0, 128, 0.4);
             width: 450px;
             color: white;
             display: flex;
             flex-direction: column;
-            box-sizing: border-box; /* Ensure padding doesn't affect width */
+            box-sizing: border-box;
+            max-height: 80vh; /* Limit height */
+            overflow-y: auto; /* Enable scrolling */
         }
+
         .signup-form h2 {
             text-align: center;
             margin-bottom: 15px;
@@ -103,6 +107,32 @@
         a:hover {
             text-decoration: underline;
         }
+        /* For Webkit-based browsers (Chrome, Edge, Safari) */
+.signup-form::-webkit-scrollbar {
+    width: 8px;
+}
+
+.signup-form::-webkit-scrollbar-track {
+    background: #222; /* Darker background for the track */
+    border-radius: 10px;
+}
+
+.signup-form::-webkit-scrollbar-thumb {
+    background: #800080; /* Purple scrollbar */
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+.signup-form::-webkit-scrollbar-thumb:hover {
+    background: #9b59b6; /* Lighter purple on hover */
+}
+
+/* For Firefox */
+.signup-form {
+    scrollbar-width: thin;
+    scrollbar-color: #800080 #222; /* Scrollbar thumb and track color */
+}
+
     </style>
 </head>
 <body>

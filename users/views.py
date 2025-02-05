@@ -163,7 +163,8 @@ def doctor_blogs(request):
 def patient_blogs(request):
     print(f"Logged-in User: {request.user.username}, User Type: {getattr(request.user, 'user_type', None)}")
     
-    if hasattr(request.user, 'user_type') and request.user.user_type == 'patient':
+    if hasattr(request.user, 'user_type') and request.user.user_type in ['patient', 'doctor']:
+
         print("User is a patient.")
         # Fetch all non-draft blogs authored by doctors
         doctor_blogs = Blog.objects.filter(is_draft=False, author__user_type='doctor')
@@ -183,11 +184,20 @@ def patient_blogs(request):
 
 @login_required
 def delete_blog(request, blog_id):
-    if request.method == "POST":  # Ensure deletion only happens on POST request
-        blog = get_object_or_404(Blog, id=blog_id, author=request.user)  # Ensure the user is the owner
+    if request.user.user_type == 'doctor':
+        blog = get_object_or_404(Blog, id=blog_id, author=request.user)
+        print(f"Deleting blog: {blog.id} by {request.user.username}")  # Debug
         blog.delete()
-        messages.success(request, "Blog deleted successfully.")
+        print("Blog deleted successfully.")
+        return render(request, 'doctor_blogs.html', {'success_message': 'Blog deleted successfully.'})
     else:
+        print("Invalid request method.")
         messages.error(request, "Invalid request method.")
     
-    return redirect('doctor_blogs')  # Redirect to the list of blogs after deletion
+    return redirect('doctor_blogs')
+
+
+@login_required
+def blog_detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id, is_draft=False, author__user_type='doctor')  # Only fetch published blogs by doctors
+    return render(request, 'blog_detail.html', {'blog': blog})

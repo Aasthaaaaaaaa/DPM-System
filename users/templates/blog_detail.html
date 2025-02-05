@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog.title }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #141414, #1c1c1c);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .blog-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 14px 15px rgba(128, 0, 128, 0.4);
+        }
+        .blog-container img {
+            max-width: 50%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #9b59b6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-container">
+        <h1>{{ blog.title }}</h1>
+        {% if blog.image %}
+            <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+        {% endif %}
+        <p><strong>Category:</strong> {{ blog.category }}</p>
+        <p><strong>Author: Dr.</strong> {{ blog.author.first_name }} {{ blog.author.last_name }}</p>
+        <p><strong>Published on:</strong> {{ blog.created_at }}</p>
+        <p>{{ blog.content }}</p>
+        <a href="{% url 'patient_blogs' %}">← Back to Blogs</a>
+    </div>
+</body>
+</html>

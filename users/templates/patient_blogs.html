@@ -28,7 +28,7 @@
             background-color: rgba(20, 20, 20, 0.9);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4);
+            box-shadow: 5px 14px 15px rgba(128, 0, 128, 0.4);
             margin: 20px auto;
             width: 95%;
             max-width: 900px;
@@ -101,21 +101,23 @@
     </style>
 </head>
 <body>
-    <h2>Blogs for Patients</h2>
+    <h2>Blogs By Doctors</h2>
 
     {% if blogs_by_category %}
         {% for category, blogs in blogs_by_category.items %}
             <div class="section-container">
                 <div class="section-title">{{ category }}</div>
+                
                 {% for blog in blogs %}
-                    <div class="blog-container">
-                        <h3>{{ blog.title }}</h3>
-                        {% if blog.image %}
-                            <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
-                        {% endif %}
-                        <p>{{ blog.summary|truncatewords:15 }}...</p>
-                    </div>
-                {% endfor %}
+    <div class="blog-container">
+        <h3><a href="{% url 'blog_detail' blog.id %}" style="color: white; text-decoration: none;">{{ blog.title }}</a></h3>
+        {% if blog.image %}
+            <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+        {% endif %}
+        <p>{{ blog.summary|truncatewords:15 }}...</p>
+    </div>
+{% endfor %}
+
             </div>
         {% endfor %}
     {% else %}
@@ -125,6 +127,11 @@
     {% endif %}
 
     <!-- Dashboard Button -->
-    <a href="{% url 'patient_dashboard' %}" class="btn-dashboard">Go to Dashboard</a>
+{% if request.user.user_type == 'doctor' %}
+<a href="{% url 'doctor_dashboard' %}" class="btn-dashboard">Go to Dashboard</a>
+{% else %}
+<a href="{% url 'patient_dashboard' %}" class="btn-dashboard">Go to Dashboard</a>
+{% endif %}
+
 </body>
 </html>
